@@ -1,0 +1,76 @@
+---
+sidebar: sidebar 
+permalink: workflows_infra/wf_list_storage_backends.html 
+keywords:  
+summary: Você pode listar os backends de armazenamento disponíveis. 
+---
+= Listar backends de armazenamento
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode listar os backends de armazenamento disponíveis.
+
+Execute a seguinte chamada de API REST.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="1,6"]
+|===
+| Método HTTP | Caminho 
+
+
+| OBTER | /Accounts/_id/topology/v1/storageBackends 
+|===
+.Curl exemplo: Retorna todos os dados para todos os backends de armazenamento
+[source, curl]
+----
+curl --request GET \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/topology/v1/storageBackends" \
+--include \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN"
+----
+.Exemplo de saída JSON
+[listing]
+----
+{
+  "items": [
+    {
+      "backendCredentialsName": "10.191.77.177",
+      "backendName": "myinchunhcluster-1",
+      "backendType": "ONTAP",
+      "backendVersion": "9.8.0",
+      "configVersion": "Not applicable",
+      "health": "Not applicable",
+      "id": "46467c16-1585-4b71-8e7f-f0bc5ff9da15",
+      "location": "nalab2",
+      "metadata": {
+        "createdBy": "4c483a7e-207b-4f9a-87b7-799a4629d7c8",
+        "creationTimestamp": "2021-07-30T14:26:19Z",
+        "modificationTimestamp": "2021-07-30T14:26:19Z"
+      },
+      "ontap": {
+        "backendManagementIP": "10.191.77.177",
+        "managementIPs": [
+          "10.191.77.177",
+          "10.191.77.179"
+        ]
+      },
+      "protectionPolicy": "Not applicable",
+      "region": "Not applicable",
+      "state": "Running",
+      "stateUnready": [],
+      "type": "application/astra-storageBackend",
+      "version": "1.0",
+      "zone": "Not applicable"
+    }
+  ]
+}
+----

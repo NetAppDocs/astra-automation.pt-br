@@ -1,0 +1,35 @@
+---
+sidebar: sidebar 
+permalink: get-started/kubernetes_concepts.html 
+keywords: kubernetes, objects, namespaces, labels 
+summary: Há vários conceitos do Kubernetes que são relevantes ao usar a API REST do Astra. 
+---
+= Conceitos básicos do Kubernetes
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Há vários conceitos do Kubernetes que são relevantes ao usar a API REST do Astra.
+
+
+
+== Objetos
+
+Os objetos mantidos em um ambiente Kubernetes são entidades persistentes que representam a configuração do cluster. Esses objetos descrevem coletivamente o estado do sistema, incluindo a carga de trabalho do cluster.
+
+
+
+== Namespaces
+
+Namespaces fornecem uma técnica para isolar recursos em um único cluster. Essa estrutura organizacional é útil ao dividir os tipos de trabalho, usuários e recursos. Objetos com um escopo _namespace_ precisam ser exclusivos dentro do namespace, enquanto aqueles com um escopo _cluster_ devem ser exclusivos em todo o cluster.
+
+
+
+== Etiquetas
+
+Os rótulos podem ser associados aos objetos Kubernetes. Eles descrevem atributos usando pares de chave-valor e podem impor uma organização arbitrária no cluster que pode ser útil para uma organização, mas estão fora da operação principal do Kubernetes.

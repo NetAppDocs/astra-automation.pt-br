@@ -1,0 +1,58 @@
+---
+sidebar: sidebar 
+permalink: python/python_before.html 
+keywords: python3, requests, urllib3, identity, json 
+summary: Python é uma linguagem de desenvolvimento popular para automação de data center. Antes de usar os recursos nativos do Python juntamente com vários pacotes comuns, você precisa preparar o ambiente e os arquivos de entrada necessários. 
+---
+= Antes de começar
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Python é uma linguagem de desenvolvimento popular para automação de data center. Antes de usar os recursos nativos do Python juntamente com vários pacotes comuns, você precisa preparar o ambiente e os arquivos de entrada necessários.
+
+
+NOTE: Além de acessar a API REST do Astra Control diretamente usando Python, o NetApp também fornece um pacote de kit de ferramentas que abstrai a API e remove algumas das complexidades. Consulte link:../python/astra_toolkits.html["O NetApp já está disponível"] para obter mais informações.
+
+
+
+== Prepare o ambiente
+
+Os requisitos básicos de configuração para executar os scripts Python são descritos abaixo.
+
+.Python 3
+Você precisa ter a versão mais recente do Python 3 instalada.
+
+.Bibliotecas adicionais
+As bibliotecas *requests* e *urllib3* devem ser instaladas. Você pode usar o pip ou outra ferramenta de gerenciamento Python conforme apropriado para o seu ambiente.
+
+.Acesso à rede
+A estação de trabalho onde os scripts são executados deve ter acesso à rede e ser capaz de alcançar o Astra Control. Ao usar o Astra Control Service, você deve estar conetado à Internet e ser capaz de se conetar ao serviço em `https://astra.netapp.io`.
+
+.Informações de identidade
+Você precisa de uma conta Astra válida com o identificador de conta e token de API. Consulte link:../get-started/get_api_token.html["Obtenha um token de API"] para obter mais informações.
+
+
+
+== Crie os arquivos de entrada JSON
+
+Os scripts Python dependem de informações de configuração contidas em arquivos de entrada JSON. Os arquivos de amostra são fornecidos abaixo.
+
+
+NOTE: Você precisa atualizar as amostras conforme apropriado para o seu ambiente.
+
+.Informações de identidade
+O arquivo a seguir contém o token de API e a conta Astra. Você precisa passar esse arquivo para scripts Python usando o `-i` parâmetro CLI (ou `--identity`).
+
+[source, json]
+----
+{
+  "api_token": "kH4CA_uVIa8q9UuPzhJaAHaGlaR7-no901DkkrVjIXk=",
+  "account_id": "5131dfdf-03a4-5218-ad4b-fe84442b9786"
+}
+----

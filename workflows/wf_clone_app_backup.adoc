@@ -1,0 +1,93 @@
+---
+sidebar: sidebar 
+permalink: workflows/wf_clone_app_backup.html 
+keywords:  
+summary: Crie uma nova aplicação clonando-a a partir de um backup. 
+---
+= Clonar um aplicativo a partir de um backup
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Crie uma nova aplicação clonando-a a partir de um backup.
+
+
+
+== Antes de começar
+
+Observe o seguinte sobre este fluxo de trabalho:
+
+* Um backup de aplicativo é usado
+* A operação de clone é executada no mesmo cluster
+
+
+
+NOTE: Para clonar um aplicativo para um cluster diferente, você precisa atualizar o `clusterId` parâmetro na entrada JSON conforme apropriado para o seu ambiente.
+
+
+
+== Passo 1: Selecione o aplicativo para clonar
+
+Execute o fluxo de trabalho link:wf_list_man_apps.html["Liste as aplicações"] e selecione a aplicação que deseja clonar. Vários dos valores de recursos são necessários para a chamada REST usada para clonar o aplicativo.
+
+
+
+== Passo 2: Selecione o backup a ser usado
+
+Execute o fluxo de trabalho link:wf_list_backups.html["Liste os backups"] e selecione cópia de segurança que pretende utilizar.
+
+
+
+== Passo 3: Clone o aplicativo
+
+Execute a seguinte chamada de API REST.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="25,75"]
+|===
+| Método HTTP | Caminho 
+
+
+| POST | /accounts//k8s/v2/qpps 
+|===
+.Parâmetros de entrada adicionais
+Além dos parâmetros comuns com todas as chamadas de API REST, os seguintes parâmetros também são usados nos exemplos curl para esta etapa.
+
+[cols="25,10,10,55"]
+|===
+| Parâmetro | Tipo | Obrigatório | Descrição 
+
+
+| JSON | Corpo | Sim | Fornece os parâmetros para o aplicativo clonado. Veja o exemplo abaixo. 
+|===
+.Curl exemplo: Clonar um aplicativo a partir de um backup
+[source, curl]
+----
+curl --request POST \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/k8s/v2/apps" \
+--include \
+--header "Content-Type: application/astra-app+json" \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN" \
+--data  @JSONinput
+----
+.Exemplo de entrada JSON
+[source, json]
+----
+{
+  "type": "application/astra-app",
+  "version": "2.0",
+  "name": "mysql-clone3",
+  "clusterID": "30880586-d579-4d27-930f-a9633e59173b",
+  "sourceClusterID": "30880586-d579-4d27-930f-a9633e59173b",
+  "namespace": "mysql",
+  "backupID": "e24515bd-a28e-4b28-b832-f3c74dbf32fb"
+}
+----

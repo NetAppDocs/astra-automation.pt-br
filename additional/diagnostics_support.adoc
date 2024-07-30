@@ -1,0 +1,37 @@
+---
+sidebar: sidebar 
+permalink: additional/diagnostics_support.html 
+keywords: diagnostics, support, debugging 
+summary: Há vários recursos de suporte disponíveis com a API REST do Astra Control que podem ser usados para diagnósticos e depuração. 
+---
+= Diagnóstico e suporte
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Há vários recursos de suporte disponíveis com a API REST do Astra Control que podem ser usados para diagnósticos e depuração.
+
+
+
+== Recursos de API
+
+Há vários recursos do Astra expostos por meio de recursos de API que fornecem informações de diagnóstico e suporte.
+
+[cols="20,80"]
+|===
+| Tipo | Descrição 
+
+
+| Evento | Atividades do sistema registradas como parte do processamento do Astra. 
+
+
+| Notificação | Um subconjunto dos Eventos que são considerados importantes o suficiente para ser apresentado ao usuário. 
+
+
+| Notificação não lida | As notificações que ainda não foram lidas ou recuperadas pelo usuário. 
+|===

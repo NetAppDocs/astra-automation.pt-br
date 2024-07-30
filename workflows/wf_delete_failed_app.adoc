@@ -1,0 +1,53 @@
+---
+sidebar: sidebar 
+permalink: workflows/wf_delete_failed_app.html 
+keywords:  
+summary: Talvez você não consiga remover um aplicativo gerenciado se ele tiver um backup ou snapshot em um estado com falha. Neste caso, você pode remover manualmente o aplicativo. 
+---
+= Eliminar uma aplicação com falha
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Talvez você não consiga remover um aplicativo gerenciado se ele tiver um backup ou snapshot em um estado com falha. Neste caso, você pode remover manualmente o aplicativo usando o fluxo de trabalho descrito abaixo.
+
+
+
+== Passo 1: Selecione o aplicativo a ser excluído
+
+Execute o fluxo de trabalho link:wf_list_man_apps.html["Liste as aplicações"] e selecione a aplicação que pretende remover.
+
+
+
+== Passo 2: Listar os backups existentes para o aplicativo
+
+Execute o fluxo de link:wf_list_backups.html["Liste os backups"]trabalho .
+
+
+
+== Passo 3: Exclua todos os backups
+
+Exclua todos os backups de aplicativos executando o fluxo de trabalho link:wf_delete_backup.html["Eliminar uma cópia de segurança"] para cada backup na lista.
+
+
+
+== Passo 4: Listar os instantâneos existentes para o aplicativo
+
+Execute o fluxo de link:wf_list_snapshots.html["Liste os instantâneos"]trabalho .
+
+
+
+== Etapa 5: Exclua todos os snapshots
+
+Execute o fluxo de trabalho link:wf_delete_snapshot.html["Eliminar um instantâneo"]de cada instantâneo na lista.
+
+
+
+== Passo 6: Remova o aplicativo
+
+Execute o fluxo de trabalho link:wf_unmanage_app.html["Desgerenciar um aplicativo"] para remover a aplicação.

@@ -1,0 +1,334 @@
+---
+sidebar: sidebar 
+permalink: workflows_infra/wf_ldap_add_entries.html 
+keywords:  
+summary: Depois que o LDAP é configurado como um provedor de autenticação para o Astra Control Center, você pode selecionar os usuários LDAP que o Astra autenticará usando as credenciais LDAP. 
+---
+= Adicionar entradas LDAP ao Astra
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Depois que o LDAP é configurado como um provedor de autenticação para o Astra Control Center, você pode selecionar os usuários LDAP que o Astra autenticará usando as credenciais LDAP. Cada usuário precisa ter uma função no Astra antes de poder acessar o Astra por meio da API REST Astra Control.
+
+Há duas maneiras de configurar o Astra para atribuir funções. Escolha o que é apropriado para o seu ambiente.
+
+* link:../workflows_infra/wf_ldap_add_entries.html#add-and-bind-an-individual-user["Adicione e vincule um usuário individual"]
+* link:../workflows_infra/wf_ldap_add_entries.html#add-and-bind-a-group["Adicione e vincule um grupo"]
+
+
+
+NOTE: As credenciais LDAP estão na forma de um nome de usuário como endereço de e-mail e a senha LDAP associada.
+
+
+
+== Adicione e vincule um usuário individual
+
+Você pode atribuir uma função a cada usuário Astra que é usado após a autenticação LDAP. Isso é apropriado quando há um pequeno número de usuários e cada um pode ter caraterísticas administrativas diferentes.
+
+
+
+=== Passo 1: Adicione um usuário
+
+Execute a seguinte chamada de API REST para adicionar um usuário ao Astra e indicar que o LDAP é o provedor de autenticação.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="1,6"]
+|===
+| Método HTTP | Caminho 
+
+
+| POST | /accounts/_id/core/v1/users 
+|===
+.Curl exemplo
+[source, curl]
+----
+curl --request POST \
+--location "https://astra.example.com/accounts/$ACCOUNT_ID/core/v1/users" \
+--include \
+--header "Content-Type: application/astra-user+json" \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN" \
+--data  @JSONinput
+----
+.Exemplo de entrada JSON
+[source, json]
+----
+{
+  "type" :  "application/astra-user",
+  "version" : "1.1",
+  "authID" : "cn=JohnDoe,ou=users,ou=astra,dc=example,dc=com",
+  "authProvider" : "ldap",
+  "firstName" : "John",
+  "lastName" : "Doe",
+  "email" : "john.doe@example.com"
+}
+----
+Observe o seguinte sobre os parâmetros de entrada:
+
+* São necessários os seguintes parâmetros:
++
+** `authProvider`
+** `authID`
+** `email`
+
+
+* `authID` É o nome distinto (DN) do usuário no LDAP
+* `email` Deve ser exclusivo para todos os usuários definidos no Astra
+
+
+Se o `email` valor não for exclusivo, ocorrerá um erro e um código de status HTTP 409 será retornado na resposta.
+
+.Exemplo de saída JSON
+[listing]
+----
+{
+  "metadata": {
+    "creationTimestamp": "2022-07-21T17:44:18Z",
+    "modificationTimestamp": "2022-07-21T17:44:18Z",
+    "createdBy": "8a02d2b8-a69d-4064-827f-36851b3e1e6e",
+    "labels": []
+  },
+  "type": "application/astra-user",
+  "version": "1.2",
+  "id": "a7b5e674-a1b1-48f6-9729-6a571426d49f",
+  "authProvider": "ldap",
+  "authID": "cn=JohnDoe,ou=users,ou=astra,dc=example,dc=com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "companyName": "",
+  "email": "john.doe@example.com",
+  "postalAddress": {
+    "addressCountry": "",
+    "addressLocality": "",
+    "addressRegion": "",
+    "streetAddress1": "",
+    "streetAddress2": "",
+    "postalCode": ""
+  },
+  "state": "active",
+  "sendWelcomeEmail": "false",
+  "isEnabled": "true",
+  "isInviteAccepted": "true",
+  "enableTimestamp": "2022-07-21T17:44:18Z",
+  "lastActTimestamp": ""
+}
+----
+
+
+=== Etapa 2: Adicione uma vinculação de função para o usuário
+
+Execute a seguinte chamada de API REST para vincular o usuário a uma função específica. Você precisa ter o UUID do usuário criado na etapa anterior.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="1,6"]
+|===
+| Método HTTP | Caminho 
+
+
+| POST | /Accounts/_id/core/v1/roleBindings 
+|===
+.Curl exemplo
+[source, curl]
+----
+curl --request POST \
+--location "https://astra.example.com/accounts/$ACCOUNT_ID/core/v1/roleBindings" \
+--include \
+--header "Content-Type: application/astra-roleBinding+json" \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN" \
+--data  @JSONinput
+----
+.Exemplo de entrada JSON
+[source, json]
+----
+{
+  "type": "application/astra-roleBinding",
+  "version": "1.1",
+  "accountID": "{account_id}",
+  "userID": "a7b5e674-a1b1-48f6-9729-6a571426d49f",
+  "role": "member",
+  "roleConstraints": ["*"]
+}
+----
+Observe o seguinte sobre os parâmetros de entrada:
+
+* O valor utilizado acima para `roleConstraint` é a única opção disponível para a versão atual do Astra. Ele indica que o usuário não está restrito a um conjunto limitado de namespaces e pode acessá-los todos.
+
+
+.Exemplo de resposta JSON
+[listing]
+----
+{
+  "metadata": {
+    "creationTimestamp": "2022-07-21T18:08:24Z",
+    "modificationTimestamp": "2022-07-21T18:08:24Z",
+    "createdBy": "8a02d2b8-a69d-4064-827f-36851b3e1e6e",
+    "labels": []
+  },
+  "type": "application/astra-roleBinding",
+  "principalType": "user",
+  "version": "1.1",
+  "id": "b02c7e4d-d483-40d1-aaff-e1f900312114",
+  "userID": "a7b5e674-a1b1-48f6-9729-6a571426d49f",
+  "groupID": "00000000-0000-0000-0000-000000000000",
+  "accountID": "d0fdbfa7-be32-4a71-b59d-13d95b42329a",
+  "role": "member",
+  "roleConstraints": ["*"]
+}
+----
+Observe o seguinte sobre os parâmetros de resposta:
+
+* O valor `user` para o `principalType` campo indica que a vinculação de função foi adicionada para um usuário (não para um grupo).
+
+
+
+
+== Adicione e vincule um grupo
+
+Você pode atribuir uma função a um grupo Astra que é usado após a autenticação LDAP. Isso é apropriado quando há um grande número de usuários e cada um pode ter caraterísticas administrativas semelhantes.
+
+
+
+=== Passo 1: Adicione um grupo
+
+Execute a seguinte chamada de API REST para adicionar um grupo ao Astra e indicar que o LDAP é o provedor de autenticação.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="1,6"]
+|===
+| Método HTTP | Caminho 
+
+
+| POST | /accounts//core/v1/groups 
+|===
+.Curl exemplo
+[source, curl]
+----
+curl --request POST \
+--location "https://astra.example.com/accounts/$ACCOUNT_ID/core/v1/groups" \
+--include \
+--header "Content-Type: application/astra-group+json" \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN" \
+--data  @JSONinput
+----
+.Exemplo de entrada JSON
+[source, json]
+----
+{
+  "type": "application/astra-group",
+  "version": "1.0",
+  "name": "Engineering",
+  "authProvider": "ldap",
+  "authID": "CN=Engineering,OU=groups,OU=astra,DC=example,DC=com"
+}
+----
+Observe o seguinte sobre os parâmetros de entrada:
+
+* São necessários os seguintes parâmetros:
++
+** `authProvider`
+** `authID`
+
+
+
+
+.Exemplo de resposta JSON
+[listing]
+----
+{
+  "type": "application/astra-group",
+  "version": "1.0",
+  "id": "8b5b54da-ae53-497a-963d-1fc89990525b",
+  "name": "Engineering",
+  "authProvider": "ldap",
+  "authID": "CN=Engineering,OU=groups,OU=astra,DC=example,DC=com",
+  "metadata": {
+    "creationTimestamp": "2022-07-21T18:42:52Z",
+    "modificationTimestamp": "2022-07-21T18:42:52Z",
+    "createdBy": "8a02d2b8-a69d-4064-827f-36851b3e1e6e",
+    "labels": []
+  }
+}
+----
+
+
+=== Etapa 2: Adicione uma vinculação de função para o grupo
+
+Execute a seguinte chamada de API REST para vincular o grupo a uma função específica. Você precisa ter o UUID do grupo criado na etapa anterior. Os usuários que são membros do grupo poderão fazer login no Astra após o LDAP executar a autenticação.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="1,6"]
+|===
+| Método HTTP | Caminho 
+
+
+| POST | /Accounts/_id/core/v1/roleBindings 
+|===
+.Curl exemplo
+[source, curl]
+----
+curl --request POST \
+--location "https://astra.example.com/accounts/$ACCOUNT_ID/core/v1/roleBindings" \
+--include \
+--header "Content-Type: application/astra-roleBinding+json" \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN" \
+--data  @JSONinput
+----
+.Exemplo de entrada JSON
+[source, json]
+----
+{
+  "type": "application/astra-roleBinding",
+  "version": "1.1",
+  "accountID": "{account_id}",
+  "groupID": "8b5b54da-ae53-497a-963d-1fc89990525b",
+  "role": "viewer",
+  "roleConstraints": ["*"]
+}
+----
+Observe o seguinte sobre os parâmetros de entrada:
+
+* O valor utilizado acima para `roleConstraint` é a única opção disponível para a versão atual do Astra. Ele indica que o usuário não está restrito a certos namespaces e pode acessá-los todos.
+
+
+.Exemplo de resposta JSON
+[listing]
+----
+{
+  "metadata": {
+    "creationTimestamp": "2022-07-21T18:59:43Z",
+    "modificationTimestamp": "2022-07-21T18:59:43Z",
+    "createdBy": "527329f2-662c-41c0-ada9-2f428f14c137",
+    "labels": []
+  },
+  "type": "application/astra-roleBinding",
+  "principalType": "group",
+  "version": "1.1",
+  "id": "2f91b06d-315e-41d8-ae18-7df7c08fbb77",
+  "userID": "00000000-0000-0000-0000-000000000000",
+  "groupID": "8b5b54da-ae53-497a-963d-1fc89990525b",
+  "accountID": "d0fdbfa7-be32-4a71-b59d-13d95b42329a",
+  "role": "viewer",
+  "roleConstraints": ["*"]
+}
+----
+Observe o seguinte sobre os parâmetros de resposta:
+
+* O valor `group` para o `principalType` campo indica que a vinculação de função foi adicionada para um grupo (não para um usuário).
+

@@ -1,0 +1,135 @@
+---
+sidebar: sidebar 
+permalink: get-started/prepare_to_use_workflows.html 
+keywords: workflows, prepare workflows, use workflows 
+summary: Você deve estar familiarizado com a organização e o formato dos workflows do Astra antes de usá-los em uma implantação ao vivo. 
+---
+= Prepare-se para usar os fluxos de trabalho
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você deve estar familiarizado com a organização e o formato dos workflows do Astra antes de usá-los em uma implantação ao vivo.
+
+
+
+== Introdução
+
+Um _workflow_ é uma sequência de uma ou mais etapas necessárias para realizar uma tarefa ou objetivo administrativo específico. Cada etapa em um fluxo de trabalho do Astra Control é uma das seguintes:
+
+* Chamada de API REST (com detalhes como exemplos curl e JSON)
+* Invocação de outro fluxo de trabalho Astra
+* Tarefa relacionada diversos (como tomar uma decisão de projeto necessária)
+
+
+Os fluxos de trabalho incluem as etapas principais e os parâmetros necessários para realizar cada tarefa. Eles fornecem um ponto de partida para personalizar seu ambiente de automação.
+
+
+NOTE: Um fluxo de trabalho pode conter apenas uma etapa. Esses fluxos de trabalho de etapa única são formatados de forma ligeiramente diferente dos fluxos de trabalho que contêm várias etapas. Por exemplo, o nome explícito da etapa é removido. A ação ou operação deve ser clara com base no título do fluxo de trabalho.
+
+
+
+== Categorias de fluxo de trabalho
+
+Há duas grandes categorias de workflows do Astra disponíveis com base no seu modelo de implantação. Se você estiver usando o Astra Control Center, comece com os workflows de infraestrutura e prossiga para os workflows de gerenciamento. Ao usar o Astra Control Service, você costuma ir diretamente aos workflows de gerenciamento.
+
+
+NOTE: As amostras curl nos fluxos de trabalho usam o URL para Astra Control Service. Você precisa alterar o URL ao usar o Astra Control Center no local, conforme apropriado para seu ambiente.
+
+
+
+=== Workflows de infraestrutura
+
+Esses workflows lidam com a infraestrutura Astra, incluindo credenciais, buckets e back-ends de storage. Elas são necessárias com o Astra Control Center, mas na maioria dos casos também podem ser usadas com o Astra Control Service. Os fluxos de trabalho concentram-se nas tarefas necessárias para estabelecer e manter um cluster gerenciado do Astra.
+
+
+
+=== Fluxos de trabalho de gerenciamento
+
+Você pode usar esses fluxos de trabalho depois de configurar um cluster gerenciado. Os workflows de gerenciamento se concentram em operações de suporte e proteção de aplicativos, como backup, restauração e clonagem de um aplicativo.
+
+
+
+== Parâmetros de entrada comuns
+
+Os parâmetros de entrada descritos abaixo são comuns a todas as amostras curl usadas para ilustrar uma chamada de API REST.
+
+
+NOTE: Como esses parâmetros de entrada são universalmente necessários, eles não são descritos mais detalhadamente nos fluxos de trabalho individuais. Se forem utilizados parâmetros de entrada adicionais para um exemplo de curl específico, estes são descritos na secção *parâmetros de entrada adicionais*.
+
+
+
+=== Parâmetros do caminho
+
+O caminho do endpoint usado com cada chamada de API REST inclui os seguintes parâmetros. Consulte também link:../rest-core/url_format.html["Formato de URL"]para obter mais informações.
+
+ID da conta:: Esse é o valor UUIDv4 que identifica a conta Astra onde a operação da API é executada. link:../get-started/get_api_token.html["Obtenha um token de API"]Consulte para obter mais informações sobre como localizar o ID da sua conta.
+
+
+
+
+=== Cabeçalhos de solicitação
+
+Existem vários cabeçalhos de solicitação que você pode precisar incluir dependendo da chamada da API REST.
+
+Autorização:: Todas as chamadas de API nos fluxos de trabalho precisam de um token de API para identificar o usuário. Você deve incluir o token no `Authorization` cabeçalho da solicitação. Consulte link:../get-started/get_api_token.html["Obtenha um token de API"] para obter mais informações sobre como gerar um token de API.
+Tipo de conteúdo:: Com as solicitações HTTP POST e PUT em que JSON é incluído no corpo da solicitação, você deve declarar o tipo de Mídia com base no recurso Astra. Por exemplo, você pode incluir o cabeçalho `Content-Type: application/astra-appSnap+json` ao criar um snapshot para um aplicativo gerenciado.
+Aceitar:: Você pode declarar o tipo de Mídia específico do conteúdo esperado na resposta com base no recurso Astra. Por exemplo, você pode incluir o cabeçalho `Accept: application/astra-appBackup+json` ao listar os backups de um aplicativo gerenciado. No entanto, para simplificar, as amostras curl nos fluxos de trabalho aceitam todos os tipos de Mídia.
+
+
+
+
+== Apresentação de tokens e identificadores
+
+O token API e outros valores de ID usados com os exemplos curl são opacos sem significado discernível. E assim, para melhorar a legibilidade das amostras, os valores reais de token e ID não são usados. Em vez disso, palavras-chave reservadas menores são usadas que tem vários benefícios:
+
+* As amostras curl e JSON são mais claras e fáceis de entender.
+* Como todas as palavras-chave usam o mesmo formato com colchetes e letras maiúsculas, você pode identificar rapidamente o local e o conteúdo a ser inserido ou extraído.
+* Nenhum valor é perdido porque os parâmetros originais não podem ser copiados e usados com uma implantação real.
+
+
+As variáveis são formatadas para uso em um ambiente de shell Bash. Cada variável começa com um sinal de dólar e é incluída em aspas duplas, conforme necessário. Isso os torna reconhecíveis ao Bash. Maiúsculas são usadas consistentemente para os nomes.
+
+Aqui estão algumas das palavras-chave reservadas comuns usadas nos exemplos curl. Esta lista não é exaustiva e palavras-chave adicionais são usadas conforme necessário. Seu significado deve ser óbvio com base no contexto.
+
+[cols="25,15,60"]
+|===
+| Palavra-chave | Tipo | Descrição 
+
+
+| CONTA_ID | Caminho | O valor UUIDv4 identificando a conta onde a operação da API é executada. 
+
+
+| API_TOKEN | Colhedor | O token do portador identificando e autorizando o chamador. 
+
+
+| APP_ID | Caminho | O valor UUIDv4 identificando o aplicativo para a chamada API. 
+|===
+
+
+== Usando os exemplos com Bash
+
+Se você usar os exemplos de cURL de fluxo de trabalho diretamente, você deve atualizar as variáveis que eles contêm com os valores apropriados para o seu ambiente. Você pode editar manualmente os exemplos ou confiar no shell Bash para fazer a substituição por você, como descrito abaixo.
+
+
+NOTE: Uma vantagem de usar o Bash é que você pode definir os valores da variável uma vez em uma sessão de shell em vez de uma vez por comando curl.
+
+.Passos
+. Abra o shell Bash fornecido com Linux ou sistema operacional semelhante.
+. Defina os valores da variável incluídos no exemplo curl que você deseja executar. Por exemplo:
++
+`$API_TOKEN=SGgpXHeco6M8PLxzIlgbztA4k3_eX4UCa842hOXHBFA=`
+
+. Copie o exemplo curl da página de fluxo de trabalho e cole-o no terminal shell.
+. Pressione *ENTER* para executar as seguintes tarefas:
++
+.. Substitua os valores da variável que você definir.
+.. Execute o comando curl.
+
+
+

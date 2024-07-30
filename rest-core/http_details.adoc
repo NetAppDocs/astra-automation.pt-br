@@ -1,0 +1,168 @@
+---
+sidebar: sidebar 
+permalink: rest-core/http_details.html 
+keywords: http, http details, uri, json 
+summary: A API REST do Astra Control usa HTTP e parâmetros relacionados para agir nas instâncias e coleções de recursos. 
+---
+= Detalhes HTTP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+A API REST do Astra Control usa HTTP e parâmetros relacionados para agir nas instâncias e coleções de recursos. Detalhes da implementação HTTP são apresentados abaixo.
+
+
+
+== Transações de API e o modelo CRUD
+
+A API REST do Astra Control implementa um modelo transacional com operações bem definidas e transições de estado.
+
+.Transação de API de solicitação e resposta
+Cada chamada de API REST é executada como uma solicitação HTTP para o serviço Astra. Cada solicitação gera uma resposta associada de volta ao cliente. Esse par de solicitação-resposta pode ser considerado uma transação de API.
+
+.Suporte para o modelo operacional CRUD
+Cada uma das instâncias e coleções de recursos disponíveis por meio da API REST do Astra Control é acessada com base no modelo *CRUD*. Existem quatro operações, cada uma delas mapeia para um único método HTTP. As operações incluem:
+
+* Criar
+* Leia
+* Atualização
+* Eliminar
+
+
+Para alguns recursos do Astra, apenas um subconjunto dessas operações é suportado. Você deve revisar o link:../get-started/online_api_ref.html["Referência de API online"] para obter mais informações sobre uma chamada de API específica.
+
+
+
+== Métodos HTTP
+
+Os métodos HTTP ou verbos suportados pela API são apresentados na tabela abaixo.
+
+[cols="15,15,70"]
+|===
+| Método | CRUD | Descrição 
+
+
+| OBTER | Leia | Recupera propriedades de objeto para uma instância ou coleção de recursos. Isso é considerado uma operação *list* quando usado com uma coleção. 
+
+
+| POST | Criar | Cria uma nova instância de recurso com base nos parâmetros de entrada. O URL de longo prazo é retornado em um `Location` cabeçalho de resposta. 
+
+
+| COLOQUE | Atualização | Atualiza uma instância de recurso inteira com o corpo de solicitação JSON fornecido. Os valores-chave que não são modificáveis pelo usuário são preservados. 
+
+
+| ELIMINAR | Eliminar | Exclui uma instância de recurso existente. 
+|===
+
+
+== Cabeçalhos de solicitação e resposta
+
+A tabela a seguir resume os cabeçalhos HTTP usados com a API REST do Astra Control.
+
+
+NOTE:  https://www.rfc-editor.org/rfc/rfc7232.txt["RFC 7232"^]Consulte e https://www.rfc-editor.org/rfc/rfc7233.txt["RFC 7233"^] para obter mais informações.
+
+[cols="30,15,55"]
+|===
+| Colhedor | Tipo | Notas de utilização 
+
+
+| Aceitar | Pedido | Se o valor for "*/*" ou não for fornecido, `application/json` será retornado no cabeçalho de resposta Content-Type. Se o valor estiver definido para o tipo de Mídia de recurso Astra, o mesmo tipo de Mídia será retornado no cabeçalho Content-Type. 
+
+
+| Autorização | Pedido | Token de portador com a chave API para o usuário. 
+
+
+| Tipo de conteúdo | Resposta | Devolvido com base no `Accept` cabeçalho da solicitação. 
+
+
+| ETAG | Resposta | Incluído com um sucesso como definido com RFC 7232. O valor é uma representação hexadecimal do valor MD5 para todo o recurso JSON. 
+
+
+| If-Match | Pedido | Um cabeçalho de solicitação de pré-condição implementado conforme descrito na seção 3,1 RFC 7232 e suporte para solicitações *PUT*. 
+
+
+| Se-modificado-desde | Pedido | Um cabeçalho de solicitação de pré-condição implementado conforme descrito na seção 3,4 RFC 7232 e suporte para solicitações *PUT*. 
+
+
+| If-Unmodified-since | Pedido | Um cabeçalho de solicitação de pré-condição implementado conforme descrito na seção 3,4 RFC 7232 e suporte para solicitações *PUT*. 
+
+
+| Localização | Resposta | Contém a URL completa do recurso recém-criado. 
+|===
+
+
+== Parâmetros de consulta
+
+Os seguintes parâmetros de consulta estão disponíveis para uso com coleções de recursos. Consulte link:../additional/work_with_collections.html["Trabalhe com coleções"] para obter mais informações.
+
+[cols="20,80"]
+|===
+| Parâmetro de consulta | Descrição 
+
+
+| incluir | Contém os campos que devem ser retornados ao ler uma coleção. 
+
+
+| filtro | Indica os campos que devem corresponder para que um recurso seja retornado ao ler uma coleção. 
+
+
+| Ordenar | Determina a ordem de classificação dos recursos retornados ao ler uma coleção. 
+
+
+| limite | Limita o número máximo de recursos retornados ao ler uma coleção. 
+
+
+| ignorar | Define o número de recursos para passar e pular ao ler uma coleção. 
+
+
+| contar | Indica se o número total de recursos deve ser retornado no objeto metadados. 
+|===
+
+
+== Códigos de status HTTP
+
+Os códigos de status HTTP usados pela API REST do Astra Control são descritos abaixo.
+
+
+NOTE: A API REST do Astra Control também usa o padrão *Detalhes do problema para APIs HTTP*. Consulte link:../additional/diagnostics_support.html["Diagnóstico e suporte"] para obter mais informações.
+
+[cols="15,20,65"]
+|===
+| Código | Significado | Descrição 
+
+
+| 200 | OK | Indica sucesso para chamadas que não criam uma nova instância de recurso. 
+
+
+| 201 | Criado | Um objeto é criado com sucesso e o cabeçalho de resposta de localização inclui o identificador exclusivo para o objeto. 
+
+
+| 204 | Nenhum conteúdo | A solicitação foi bem-sucedida, embora nenhum conteúdo tenha sido retornado. 
+
+
+| 400 | Pedido incorreto | A entrada de solicitação não é reconhecida ou é inadequada. 
+
+
+| 401 | Não autorizado | O usuário não está autorizado e deve autorizar. 
+
+
+| 403 | Proibido | O acesso é negado devido a um erro de autorização. 
+
+
+| 404 | Não encontrado | O recurso referido na solicitação não existe. 
+
+
+| 409 | Conflito | Uma tentativa de criar um objeto falhou porque o objeto já existe. 
+
+
+| 500 | Erro interno | Ocorreu um erro interno geral no servidor. 
+
+
+| 503 | Serviço indisponível | O serviço não está pronto para lidar com a solicitação por algum motivo. 
+|===

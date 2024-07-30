@@ -1,0 +1,32 @@
+---
+sidebar: sidebar 
+permalink: additional/work_with_collections.html 
+keywords: collections, filtering, pagination, count 
+summary: A API REST do Astra Control fornece várias maneiras diferentes de acessar coleções de recursos por meio dos parâmetros de consulta definidos. 
+---
+= Trabalhe com coleções
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+A API REST do Astra Control fornece várias maneiras diferentes de acessar coleções de recursos por meio dos parâmetros de consulta definidos.
+
+.Selecionar valores
+Você pode especificar quais pares de chave-valor devem ser retornados para cada instância de recurso usando o `include` parâmetro. Todas as instâncias são retornadas no corpo de resposta.
+
+.Filtragem
+A filtragem de recursos de coleta permite que um usuário da API especifique condições que determinam se um recurso é retornado no corpo da resposta. O `filter` parâmetro é usado para indicar a condição de filtragem.
+
+.Ordenação
+A classificação de recursos de coleta permite que um usuário da API especifique a ordem em que os recursos são retornados no corpo de resposta. O `orderBy` parâmetro é usado para indicar a condição de filtragem.
+
+.Paginação
+Você pode impor a paginação restringindo o número de instâncias de recursos retornadas em uma solicitação usando o `limit` parâmetro.
+
+.Contar
+Se você incluir o parâmetro booleano `count` definido como `true`, o número de recursos na matriz retornada para uma determinada resposta será fornecido na seção metadados.

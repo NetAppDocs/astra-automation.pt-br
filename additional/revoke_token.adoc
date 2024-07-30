@@ -1,0 +1,35 @@
+---
+sidebar: sidebar 
+permalink: additional/revoke_token.html 
+keywords: token, revoke token 
+summary: Você pode revogar um token de API na interface da Web Astra quando não for mais necessário. 
+---
+= Revogar um token de API
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode revogar um token de API na interface da Web Astra quando não for mais necessário.
+
+.Antes de começar
+Você precisa de credenciais para fazer login na interface de usuário da Web Astra para sua implantação. Você também deve identificar os tokens que deseja revogar.
+
+.Sobre esta tarefa
+Depois que um token é revogado, ele é imediatamente e permanentemente inutilizável.
+
+.Passos
+. Faça login no Astra usando suas credenciais de conta da seguinte maneira:
++
+.. Astra Control Service: https://astra.netapp.io/["https://astra.netapp.io"^]
+.. Astra Control Center: Use o URL do seu ambiente local, conforme estabelecido durante a instalação
+
+
+. Clique no ícone de figura no canto superior direito da página e selecione *Acesso à API*.
+. Selecione o token ou tokens que você deseja revogar.
+. Na caixa suspensa *ações*, clique em *revogar tokens*.
+

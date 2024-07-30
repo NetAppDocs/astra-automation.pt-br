@@ -1,0 +1,65 @@
+---
+sidebar: sidebar 
+permalink: additional/rbac.html 
+keywords: rbac, roles, namespace granularity 
+summary: 'A API REST do Astra dá suporte ao controle de acesso baseado em funções (RBAC) para conceder e restringir o acesso às funções do sistema.' 
+---
+= Segurança RBAC
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+A API REST do Astra dá suporte ao controle de acesso baseado em funções (RBAC) para conceder e restringir o acesso às funções do sistema.
+
+
+
+== Funções do Astra
+
+Cada usuário do Astra é atribuído a uma única função que determina as ações que podem ser executadas. As funções são organizadas em uma hierarquia conforme descrito na tabela abaixo.
+
+[cols="15,85"]
+|===
+| Função | Descrição 
+
+
+| Proprietário | Tem todas as permissões da função Admin e também pode excluir contas Astra. 
+
+
+| Administrador | Tem todas as permissões da função Membro e também pode convidar os usuários para participar de uma conta. 
+
+
+| Membro | Pode gerenciar totalmente a aplicação Astra e os recursos de computação. 
+
+
+| Visualizador | Restrito à visualização apenas de recursos. 
+|===
+
+
+== RBAC aprimorado com granularidade de namespace
+
+
+NOTE: Esse recurso foi introduzido com a versão 22,04 da API REST do Astra.
+
+Quando uma vinculação de função é estabelecida para um usuário específico, uma restrição pode ser aplicada para limitar os namespaces aos quais o usuário tem acesso. Existem várias maneiras de definir essa restrição como descrito na tabela abaixo. Consulte o parâmetro `roleContraints` na API de vinculação de função para obter mais informações.
+
+[cols="20,80"]
+|===
+| Namespaces | Descrição 
+
+
+| Tudo | O usuário pode acessar todos os namespaces através do parâmetro curinga "*". Este é o valor padrão para manter a compatibilidade com versões anteriores. 
+
+
+| Nenhum | A lista de restrições é especificada embora esteja vazia. Isso indica que o usuário não pode acessar nenhum namespace. 
+
+
+| Lista de namespace | O UUID de um namespace está incluído, o que restringe o usuário ao namespace único. Uma lista separada por vírgulas também pode ser usada para permitir o acesso a vários namespaces. 
+
+
+| Etiqueta | Um rótulo é especificado e o acesso é permitido a todos os namespaces correspondentes. 
+|===

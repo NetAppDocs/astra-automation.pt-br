@@ -1,0 +1,131 @@
+---
+sidebar: sidebar 
+permalink: workflows_infra/wf_list_storage_classes.html 
+keywords:  
+summary: Você pode listar as classes de armazenamento disponíveis. 
+---
+= Listar classes de armazenamento
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode listar as classes de armazenamento disponíveis.
+
+
+
+== Passo 1: Selecione a nuvem
+
+Execute o fluxo de trabalho link:../workflows_infra/wf_list_clouds.html["Liste as nuvens"] e selecione a nuvem na qual você estará trabalhando.
+
+
+
+== Passo 2: Selecione o cluster
+
+Execute o fluxo de trabalho link:../workflows_infra/wf_list_clusters.html["Liste os clusters"] e selecione o cluster.
+
+
+
+== Etapa 3: Listar as classes de armazenamento de um cluster específico
+
+Execute a seguinte chamada de API REST para listar as classes de armazenamento de um cluster e nuvem específicos.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="1,6"]
+|===
+| Método HTTP | Caminho 
+
+
+| OBTER | /Accounts/(account_id)/topology/v1/clouds/<CLOUD_ID>/clusters/<CLUSTER_ID>/storageClasses 
+|===
+.Curl exemplo: Retorna todos os dados para todas as classes de armazenamento
+[source, curl]
+----
+curl --request GET \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/topology/v1/clouds/<CLOUD_ID>/clusters/<CLUSTER_ID>/storageClasses" \
+--include \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN"
+----
+.Exemplo de saída JSON
+[listing]
+----
+{
+    "items": [
+        {
+            "type": "application/astra-storageClass",
+            "version": "1.1",
+            "id": "4bacbb3c-0727-4f58-b13c-3a2a069baf89",
+            "name": "ontap-basic",
+            "provisioner": "csi.trident.netapp.io",
+            "available": "eligible",
+            "allowVolumeExpansion": "true",
+            "reclaimPolicy": "Delete",
+            "volumeBindingMode": "Immediate",
+            "isDefault": "true",
+            "metadata": {
+                "createdBy": "system",
+                "creationTimestamp": "2022-10-26T05:16:19Z",
+                "modificationTimestamp": "2022-10-26T05:16:19Z",
+                "labels": []
+            }
+        },
+        {
+            "type": "application/astra-storageClass",
+            "version": "1.1",
+            "id": "150fe657-4a42-47a3-abc6-5dafba3de8bf",
+            "name": "thin",
+            "provisioner": "kubernetes.io/vsphere-volume",
+            "available": "ineligible",
+            "reclaimPolicy": "Delete",
+            "volumeBindingMode": "Immediate",
+            "metadata": {
+                "createdBy": "system",
+                "creationTimestamp": "2022-10-26T04:46:08Z",
+                "modificationTimestamp": "2022-11-04T14:58:19Z",
+                "labels": []
+            }
+        },
+        {
+            "type": "application/astra-storageClass",
+            "version": "1.1",
+            "id": "7c6a5c58-6a0d-4cb6-98a0-8202ad2de74a",
+            "name": "thin-csi",
+            "provisioner": "csi.vsphere.vmware.com",
+            "available": "ineligible",
+            "allowVolumeExpansion": "true",
+            "reclaimPolicy": "Delete",
+            "volumeBindingMode": "WaitForFirstConsumer",
+            "metadata": {
+                "createdBy": "system",
+                "creationTimestamp": "2022-10-26T04:46:17Z",
+                "modificationTimestamp": "2022-10-26T04:46:17Z",
+                "labels": []
+            }
+        },
+        {
+            "type": "application/astra-storageClass",
+            "version": "1.1",
+            "id": "7010ef09-92a5-4c90-a5e5-3118e02dc9a7",
+            "name": "vsim-san",
+            "provisioner": "csi.trident.netapp.io",
+            "available": "eligible",
+            "allowVolumeExpansion": "true",
+            "reclaimPolicy": "Delete",
+            "volumeBindingMode": "Immediate",
+            "metadata": {
+                "createdBy": "system",
+                "creationTimestamp": "2022-11-03T18:40:03Z",
+                "modificationTimestamp": "2022-11-03T18:40:03Z",
+                "labels": []
+            }
+        }
+    ]
+}
+----

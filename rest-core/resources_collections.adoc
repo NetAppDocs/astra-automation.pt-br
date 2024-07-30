@@ -1,0 +1,104 @@
+---
+sidebar: sidebar 
+permalink: rest-core/resources_collections.html 
+keywords: resources, instances, collections, uuid, uuidv4, state 
+summary: A API REST do Astra Control fornece acesso a instâncias de recursos e coleções de instâncias de recursos. 
+---
+= Recursos e coleções
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+A API REST do Astra Control fornece acesso a instâncias de recursos e coleções de instâncias de recursos.
+
+
+NOTE: Conceitualmente um resource * REST é semelhante a um objeto * conforme definido com as linguagens e sistemas de programação orientada a objetos (OOP). Às vezes, esses termos são usados de forma intercambiável. Mas, em geral, "recurso" é preferível quando usado no contexto da API REST externa enquanto "objeto" é usado para os dados de instância com estado correspondente armazenados no servidor.
+
+
+
+== Atributos dos recursos do Astra
+
+A API REST do Astra Control está em conformidade com os princípios de design RESTful. Cada instância de recurso Astra é criada com base em um tipo de recurso bem definido. Um conjunto de instâncias de recursos do mesmo tipo é chamado de *Collection*. As chamadas API atuam sobre recursos individuais ou coleções de recursos.
+
+.Tipos de recursos
+Os tipos de recursos incluídos na API REST do Astra Control têm as seguintes características:
+
+* Cada tipo de recurso é definido usando um esquema (normalmente em JSON)
+* Cada esquema de recursos inclui o tipo de recurso e a versão
+* Os tipos de recursos são globalmente únicos
+
+
+.Instâncias de recursos
+As instâncias de recursos disponíveis pela API REST do Astra Control têm as seguintes características:
+
+* As instâncias de recurso são criadas com base em um único tipo de recurso
+* O tipo de recurso é indicado utilizando o valor tipo de material
+* As instâncias são compostas por dados com estado que são mantidos pelo serviço Astra
+* Cada instância é acessível através de uma URL única e de longa duração
+* Nos casos em que uma instância de recurso pode ter mais de uma representação, diferentes tipos de Mídia podem ser usados para solicitar a representação desejada
+
+
+.Coleções de recursos
+As coleções de recursos disponíveis pela API REST do Astra Control têm as seguintes características:
+
+* O conjunto de instâncias de recursos de um único tipo de recurso é conhecido como uma coleção
+* Coleções de recursos têm uma URL única e de longa duração
+
+
+.Identificadores de instância
+Cada instância de recurso recebe um identificador quando é criada. Este identificador é um valor UUIDv4 de 128 bits. Os valores UUIDv4 atribuídos são globalmente únicos e imutáveis. Depois de emitir uma chamada de API que cria uma nova instância, um URL com o ID associado é retornado ao chamador em um `Location` cabeçalho da resposta HTTP. Você pode extrair o identificador e usá-lo em chamadas subsequentes quando se refere à instância de recurso.
+
+
+NOTE: O identificador de recurso é a chave primária usada para coleções.
+
+
+
+== Estrutura comum para recursos do Astra
+
+Todos os recursos do Astra Control são definidos usando uma estrutura comum.
+
+.Dados comuns
+Cada recurso Astra contém os valores-chave mostrados na tabela a seguir.
+
+[cols="15,85"]
+|===
+| Chave | Descrição 
+
+
+| tipo | Um tipo de recurso globalmente único que é conhecido como *tipo de recurso*. 
+
+
+| versão | Um identificador de versão que é conhecido como a versão *resource*. 
+
+
+| id | Um identificador global único que é conhecido como *resource identifier*. 
+
+
+| metadados | Um objeto JSON contendo várias informações, incluindo rótulos de usuário e sistema. 
+|===
+.Objeto de metadados
+O objeto JSON de metadados incluído com cada recurso Astra contém os valores-chave mostrados na tabela a seguir.
+
+[cols="15,85"]
+|===
+| Chave | Descrição 
+
+
+| etiquetas | Matriz JSON de rótulos especificados pelo cliente associados ao recurso. 
+
+
+| CriaçãoTimestamp | String JSON contendo um carimbo de data/hora indicando quando o recurso foi criado. 
+
+
+| Alteração do Timestamp | String JSON contendo um carimbo de data/hora formatado ISO-8601 indicando quando o recurso foi alterado pela última vez. 
+
+
+| CreatedBy | String JSON contendo o identificador UUIDv4 do ID do usuário que criou o recurso. Se o recurso foi criado por um componente interno do sistema e não houver UUID associado à entidade criadora, o UUID *null* é usado. 
+|===
+.Estado do recurso
+Recursos selecionados um `state` valor que é usado para orquestrar transições de ciclo de vida e controlar o acesso.

@@ -1,0 +1,12 @@
+---
+section: python
+title: Usando Python
+entries:
+- title: O NetApp já está disponível
+  url: "/python/astra_toolkits.html"
+- title: Python nativo
+  entries:
+  - title: Antes de começar
+    url: "/python/python_before.html"
+  - title: Liste as aplicações
+    url: "/python/py_list_man_apps.html"

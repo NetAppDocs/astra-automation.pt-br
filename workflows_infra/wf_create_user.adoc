@@ -1,0 +1,184 @@
+---
+sidebar: sidebar 
+permalink: workflows_infra/wf_create_user.html 
+keywords:  
+summary: Você pode criar um usuário com credenciais específicas e uma função predefinida. Você também pode, opcionalmente, restringir o acesso do usuário a namespaces específicos. 
+---
+= Crie um usuário
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode criar um usuário com credenciais específicas e uma função predefinida. Você também pode, opcionalmente, restringir o acesso do usuário a namespaces específicos.
+
+
+
+== Passo 1: Selecione um nome de usuário
+
+Execute o fluxo de trabalho link:../workflows_infra/wf_list_users.html["Listar usuários"] e selecione um nome disponível que não esteja atualmente em uso.
+
+
+
+== Passo 2: Crie o usuário
+
+Execute a seguinte chamada de API REST para criar um usuário. Após a conclusão bem-sucedida da chamada, o novo usuário ainda não será utilizável.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="25,75"]
+|===
+| Método HTTP | Caminho 
+
+
+| POST | /accounts/_id/core/v1/users 
+|===
+.Curl exemplo
+[source, curl]
+----
+curl --request POST \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/core/v1/users" \
+--include \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN" \
+--data  @JSONinput
+----
+.Exemplo de entrada JSON
+[source, json]
+----
+{
+  "type" :  "application/astra-user",
+  "version" : "1.1",
+  "firstName" : "John",
+  "lastName" : "West",
+  "email" : "jwest@example.com"
+}
+----
+.Exemplo de saída JSON
+[listing]
+----
+{
+    "metadata": {
+        "creationTimestamp": "2022-11-20T17:23:15Z",
+        "modificationTimestamp": "2022-11-20T17:23:15Z",
+        "createdBy": "a20e91f3-2c49-443b-b240-615d940ec5f3",
+        "labels": []
+    },
+    "type": "application/astra-user",
+    "version": "1.2",
+    "id": "d07dac0a-a328-4840-a216-12de16bbd484",
+    "authProvider": "local",
+    "authID": "jwest@example.com",
+    "firstName": "John",
+    "lastName": "West",
+    "companyName": "",
+    "email": "jwest@example.com",
+    "postalAddress": {
+        "addressCountry": "",
+        "addressLocality": "",
+        "addressRegion": "",
+        "streetAddress1": "",
+        "streetAddress2": "",
+        "postalCode": ""
+    },
+    "state": "active",
+    "sendWelcomeEmail": "false",
+    "isEnabled": "true",
+    "isInviteAccepted": "true",
+    "enableTimestamp": "2022-11-20T17:23:15Z",
+    "lastActTimestamp": ""
+}
+----
+
+
+== Passo 3: Opcionalmente, selecione os namespaces permitidos
+
+Execute o fluxo de trabalho link:../workflows/wf_list_namespaces.html["Liste os namespaces"] e selecione os namespaces aos quais você deseja restringir o acesso.
+
+
+
+== Passo 4: Vincule o usuário a uma função
+
+Execute a seguinte chamada de API REST para vincular o usuário a uma função. O exemplo abaixo não coloca restrições no acesso ao namespace. Consulte link:../additional/rbac.html#enhanced-rbac-with-namespace-granularity["RBAC aprimorado com granularidade de namespace"] para obter mais informações.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="25,75"]
+|===
+| Método HTTP | Caminho 
+
+
+| POST | /Accounts/_id/core/v1/roleBindings 
+|===
+.Curl exemplo
+[source, curl]
+----
+curl --request POST \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/core/v1/roleBindings" \
+--include \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN" \
+--data  @JSONinput
+----
+.Exemplo de entrada JSON
+[source, json]
+----
+{
+  "type" :  "application/astra-roleBinding",
+  "version" : "1.1",
+  "userID" : "d07dac0a-a328-4840-a216-12de16bbd484",
+  "accountID" : "29e1f39f-2bf4-44ba-a191-5b84ef414c95",
+  "role" : "viewer",
+  "roleConstraints": [ "*" ]
+}
+----
+
+
+== Passo 5: Crie uma credencial
+
+Execute a seguinte chamada de API REST para criar uma credencial e associá-la ao usuário. Este exemplo usa uma senha que é fornecida como um valor base64. A `name` propriedade deve conter o ID do usuário retornado na etapa anterior. A propriedade de entrada `change` também deve ser codificada em base64 e determina se o usuário deve alterar sua senha no primeiro login (`true` ou `false` ).
+
+
+NOTE: Essa etapa só é necessária com implantações do Astra Control Center que usam autenticação local. Não é necessário com implantações Astra Control Center que usam LDAP ou com implantações Astra Control Service.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="25,75"]
+|===
+| Método HTTP | Caminho 
+
+
+| POST | /accounts/_id/core/v1/credentials 
+|===
+.Curl exemplo
+[source, curl]
+----
+curl --request POST \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/core/v1/credentials" \
+--include \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN" \
+--data  @JSONinput
+----
+.Exemplo de entrada JSON
+[source, json]
+----
+{
+  "type" :  "application/astra-credential",
+  "version" : "1.1",
+  "name" : "d07dac0a-a328-4840-a216-12de16bbd484",
+  "keyType" : "passwordHash",
+  "keyStore" : {
+      "cleartext" : "TmV0QXBwMTIz",
+      "change" : "ZmFsc2U="
+  },
+  "valid" : "true"
+}
+----

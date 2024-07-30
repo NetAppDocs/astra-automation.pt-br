@@ -1,0 +1,52 @@
+---
+section: workflows
+title: Fluxos de trabalho de gerenciamento
+entries:
+- title: Prepare-se para usar os fluxos de trabalho de gerenciamento
+  url: "/workflows/workflows_before.html"
+- title: Controlo de aplicações
+  entries:
+  - title: Listar apps
+    url: "/workflows/wf_list_man_apps.html"
+  - title: Obtenha uma aplicação
+    url: "/workflows/wf_get_man_app.html"
+  - title: Gerenciar um aplicativo
+    url: "/workflows/wf_manage_app.html"
+  - title: Desgerenciar um aplicativo
+    url: "/workflows/wf_unmanage_app.html"
+- title: Proteção da aplicação
+  entries:
+  - title: Listar instantâneos
+    url: "/workflows/wf_list_snapshots.html"
+  - title: Listar backups
+    url: "/workflows/wf_list_backups.html"
+  - title: Criar instantâneo
+    url: "/workflows/wf_create_snapshot.html"
+  - title: Criar cópia de segurança
+    url: "/workflows/wf_create_backup.html"
+  - title: Eliminar instantâneo
+    url: "/workflows/wf_delete_snapshot.html"
+  - title: Eliminar cópia de segurança
+    url: "/workflows/wf_delete_backup.html"
+  - title: Criar política de proteção
+    url: "/workflows/wf_create_protection.html"
+- title: Clonar e restaurar um aplicativo
+  entries:
+  - title: Clonar uma aplicação
+    url: "/workflows/wf_clone_app.html"
+  - title: Clonar um aplicativo a partir de um snapshot
+    url: "/workflows/wf_clone_app_snapshot.html"
+  - title: Clonar um aplicativo a partir de um backup
+    url: "/workflows/wf_clone_app_backup.html"
+  - title: Restaurar uma aplicação a partir de uma cópia de segurança
+    url: "/workflows/wf_restore_app_backup.html"
+- title: Namespaces
+  entries:
+  - title: Liste namespaces
+    url: "/workflows/wf_list_namespaces.html"
+- title: Suporte
+  entries:
+  - title: Liste notificações
+    url: "/workflows/wf_list_notifications.html"
+  - title: Eliminar uma aplicação com falha
+    url: "/workflows/wf_delete_failed_app.html"

@@ -1,0 +1,29 @@
+---
+sidebar: sidebar 
+permalink: get-started/before_get_started.html 
+keywords: get started, planning 
+summary: Você pode se preparar rapidamente para começar a usar a API REST do Astra Control. 
+---
+= Antes de começar
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode se preparar rapidamente para começar a usar a API REST do Astra Control revisando as etapas abaixo.
+
+.Ter credenciais de conta Astra
+Você precisará de credenciais Astra para fazer login na interface de usuário da Web Astra e gerar um token de API. Com o Astra Control Center, você gerencia essas credenciais localmente. Com o Astra Control Service, as credenciais da conta são acessadas pelo serviço *Auth0*.
+
+.Familiarize-se com os conceitos básicos do Kubernetes
+Você deve estar familiarizado com vários conceitos básicos do Kubernetes. Consulte link:kubernetes_concepts.html["Conceitos básicos do Kubernetes"] para obter mais informações.
+
+.Rever conceitos REST e implementação
+Certifique-se de consultar link:../rest-core/rest_web_services.html["Implementação principal do REST"]informações sobre conceitos REST e detalhes sobre como a API REST do Astra Control foi projetada.
+
+.Obtenha mais informações
+Você deve estar ciente dos recursos de informações adicionais, conforme sugerido no link:../information/additional_resources.html["Recursos adicionais"].

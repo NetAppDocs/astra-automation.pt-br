@@ -1,0 +1,73 @@
+---
+sidebar: sidebar 
+permalink: workflows/wf_create_backup.html 
+keywords:  
+summary: Você pode criar um backup para um aplicativo específico e usar o backup para restaurar ou clonar o aplicativo. 
+---
+= Crie uma cópia de segurança para uma aplicação
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode criar um backup para um aplicativo específico e usar o backup para restaurar ou clonar o aplicativo.
+
+
+
+== Antes de começar
+
+Você deve ter o ID do aplicativo que deseja fazer backup. Se necessário, você pode usar o fluxo de trabalho link:wf_list_man_apps.html["Liste as aplicações"] para localizar o aplicativo.
+
+
+
+== Crie uma cópia de segurança
+
+Execute a seguinte chamada de API REST.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="25,75"]
+|===
+| Método HTTP | Caminho 
+
+
+| POST | /Accounts/_id/k8s/v1/apps//app_id/appBackups 
+|===
+.Parâmetros de entrada adicionais
+Além dos parâmetros comuns com todas as chamadas de API REST, os seguintes parâmetros também são usados nos exemplos curl para esta etapa.
+
+[cols="25,10,10,55"]
+|===
+| Parâmetro | Tipo | Obrigatório | Descrição 
+
+
+| id da aplicação | Caminho | Sim | Identifica o aplicativo onde o backup será criado. 
+
+
+| JSON | Corpo | Sim | Fornece os parâmetros para o backup. Veja o exemplo abaixo. 
+|===
+.Curl exemplo: Crie um backup para o aplicativo
+[source, curl]
+----
+curl --request POST \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/k8s/v1/apps/$APP_ID/appBackups" \
+--include \
+--header "Content-Type: application/astra-appBackup+json" \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN" \
+--data  @JSONinput
+----
+.Exemplo de entrada JSON
+[source, json]
+----
+{
+  "type": "application/astra-appBackup",
+  "version": "1.1",
+  "name": "backup-david-1"
+}
+----

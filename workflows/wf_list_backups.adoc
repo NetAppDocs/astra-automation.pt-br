@@ -1,0 +1,93 @@
+---
+sidebar: sidebar 
+permalink: workflows/wf_list_backups.html 
+keywords:  
+summary: Você pode listar os backups que foram criados para um aplicativo específico. 
+---
+= Liste os backups
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode listar os backups que foram criados para um aplicativo específico.
+
+
+
+== Antes de começar
+
+Você deve ter o ID do aplicativo para o qual deseja listar os backups. Se necessário, você pode usar o fluxo de trabalho link:wf_list_man_apps.html["Liste as aplicações"] para localizar o aplicativo.
+
+
+
+== Liste os backups
+
+Execute a seguinte chamada de API REST.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="25,75"]
+|===
+| Método HTTP | Caminho 
+
+
+| OBTER | /Accounts/_id/k8s/v1/apps//app_id/appBackups 
+|===
+.Parâmetros de entrada adicionais
+Além dos parâmetros comuns com todas as chamadas de API REST, os seguintes parâmetros também são usados nos exemplos curl para esta etapa.
+
+[cols="25,10,10,55"]
+|===
+| Parâmetro | Tipo | Obrigatório | Descrição 
+
+
+| id da aplicação | Caminho | Sim | Identifica o aplicativo gerenciado que possui os backups listados. 
+|===
+.Curl exemplo: Retornar todos os backups para o aplicativo
+[source, curl]
+----
+curl --request POST \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/k8s/v1/apps/$APP_ID/appBackups" \
+--include  \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN"
+----
+.Exemplo de saída JSON
+[listing]
+----
+{
+    "items": [
+        {
+            "type": "application/astra-appBackup",
+            "version": "1.1",
+            "id": "8edeb4a4-fd8b-4222-a559-1013145b28fc",
+            "name": "backup-david-oct28-1",
+            "bucketID": "a443e58f-59bd-4d45-835a-1bc7813f659a",
+            "snapshotID": "dfe237cb-57b7-4576-af4d-00ba3a8f2828",
+            "state": "completed",
+            "stateUnready": [],
+            "hookState": "success",
+            "totalBytes": 205219132,
+            "bytesDone": 205219132,
+            "percentDone": 100,
+            "metadata": {
+                "labels": [
+                    {
+                        "name": "astra.netapp.io/labels/read-only/triggerType",
+                        "value": "backup"
+                    }
+                ],
+                "creationTimestamp": "2022-10-28T21:58:37Z",
+                "modificationTimestamp": "2022-10-28T21:58:55Z",
+                "createdBy": "a530e865-23e8-4e2e-8020-e92c419a3867"
+            }
+        }
+    ],
+    "metadata": {}
+}
+----

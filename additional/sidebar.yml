@@ -1,0 +1,12 @@
+---
+section: additional
+title: Considerações adicionais
+entries:
+- title: Segurança RBAC
+  url: "/additional/rbac.html"
+- title: Trabalhe com coleções
+  url: "/additional/work_with_collections.html"
+- title: Diagnóstico
+  url: "/additional/diagnostics_support.html"
+- title: Revogar um token de API
+  url: "/additional/revoke_token.html"

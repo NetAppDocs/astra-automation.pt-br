@@ -1,0 +1,77 @@
+---
+sidebar: sidebar 
+permalink: workflows/wf_restore_app_backup.html 
+keywords:  
+summary: Você pode restaurar um aplicativo criando um novo aplicativo a partir de um backup. 
+---
+= Restaurar uma aplicação a partir de uma cópia de segurança
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode restaurar um aplicativo criando um novo aplicativo a partir de um backup.
+
+
+
+== Passo 1: Selecione o aplicativo para restaurar
+
+Execute o fluxo de trabalho link:wf_list_man_apps.html["Liste as aplicações"] e selecione a aplicação que deseja clonar. Vários dos valores de recursos são necessários para a chamada REST usada para restaurar o aplicativo.
+
+
+
+== Passo 2: Selecione o backup a ser usado
+
+Execute o fluxo de trabalho link:wf_list_backups.html["Liste os backups"] e selecione cópia de segurança que pretende utilizar.
+
+
+
+== Passo 3: Restaure o aplicativo
+
+Execute a seguinte chamada de API REST. Você deve fornecer o ID para um backup (como mostrado abaixo) ou snapshot.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="25,75"]
+|===
+| Método HTTP | Caminho 
+
+
+| COLOQUE | /accounts/_id/k8s/v2/apps//app_id 
+|===
+.Parâmetros de entrada adicionais
+Além dos parâmetros comuns com todas as chamadas de API REST, os seguintes parâmetros também são usados nos exemplos curl para esta etapa.
+
+[cols="25,10,10,55"]
+|===
+| Parâmetro | Tipo | Obrigatório | Descrição 
+
+
+| JSON | Corpo | Sim | Fornece os parâmetros para o aplicativo clonado. Veja o exemplo abaixo. 
+|===
+.Curl exemplo: Restaure um aplicativo no lugar a partir de um backup
+[source, curl]
+----
+curl --request PUT \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/k8s/v2/apps/$APP_ID" \
+--include \
+--header "Content-Type: application/astra-app+json" \
+--header "ForceUpdate: true" \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN" \
+--data @JSONinput
+----
+.Exemplo de entrada JSON
+[source, json]
+----
+{
+  "type": "application/astra-app",
+  "version": "2.0",
+  "backupID": "e24515bd-a28e-4b28-b832-f3c74dbf32fb"
+}
+----

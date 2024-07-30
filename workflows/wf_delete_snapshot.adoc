@@ -1,0 +1,66 @@
+---
+sidebar: sidebar 
+permalink: workflows/wf_delete_snapshot.html 
+keywords:  
+summary: Pode eliminar um instantâneo associado a uma aplicação. 
+---
+= Eliminar um instantâneo
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Pode eliminar um instantâneo associado a uma aplicação.
+
+
+
+== Antes de começar
+
+Você deve ter o seguinte:
+
+* ID do aplicativo que possui o snapshot. Se necessário, você pode usar o fluxo de trabalho link:wf_list_man_apps.html["Liste as aplicações"] para localizar o aplicativo.
+* ID do instantâneo que pretende eliminar. Se necessário, você pode usar o fluxo de trabalho link:wf_list_snapshots.html["Liste os instantâneos"] para localizar o instantâneo.
+
+
+
+
+== Eliminar o instantâneo
+
+Execute a seguinte chamada de API REST.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="25,75"]
+|===
+| Método HTTP | Caminho 
+
+
+| ELIMINAR | /Accounts/_id/k8s/v1/apps//app_id/appSnaps//appSnap_id 
+|===
+.Parâmetros de entrada adicionais
+Além dos parâmetros comuns com todas as chamadas de API REST, os seguintes parâmetros também são usados nos exemplos curl para esta etapa.
+
+[cols="25,10,10,55"]
+|===
+| Parâmetro | Tipo | Obrigatório | Descrição 
+
+
+| id da aplicação | Caminho | Sim | Identifica o aplicativo gerenciado que possui o snapshot. 
+
+
+| id do instantâneo | Caminho | Sim | Identifica o instantâneo a ser eliminado. 
+|===
+.Curl exemplo: Exclua um único snapshot para o aplicativo
+[source, curl]
+----
+curl --request DELETE \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/k8s/v1/apps/$APP_ID/appSnaps/<SNAPSHOT_ID>" \
+--include \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN"
+----

@@ -1,0 +1,47 @@
+---
+sidebar: sidebar 
+permalink: rest-core/url_format.html 
+keywords: url, url format, endpoint, version 
+summary: A estrutura geral da URL usada para acessar uma instância ou coleção de recursos através da API REST é composta por vários valores. Esta estrutura reflete o modelo de objeto subjacente e o design do sistema. 
+---
+= Formato de URL
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+A estrutura geral da URL usada para acessar uma instância ou coleção de recursos através da API REST é composta por vários valores. Esta estrutura reflete o modelo de objeto subjacente e o design do sistema.
+
+.Conta como raiz
+A raiz do caminho do recurso para cada endpoint REST é a conta Astra. E assim todos os caminhos no URL começam com `/account/{account_id}` onde `account_id` é o valor UUIDv4 exclusivo para a conta. Estrutura interna isso reflete um design em que todo o acesso a recursos é baseado em uma conta específica.
+
+.Categoria de recurso de endpoint
+Os pontos de extremidade de recursos do Astra se enquadram em três categorias diferentes:
+
+* (`/core`Núcleo )
+* Aplicativo gerenciado (`/k8s`)
+* Topologia (`/topology`)
+
+
+Consulte link:../endpoints/resources.html["Recursos"] para obter mais informações.
+
+.Versão da categoria
+Cada uma das três categorias de recursos tem uma versão global que controla a versão dos recursos acessados. Por convenção e definição, mover para uma nova versão principal de uma categoria de recurso (como, de `/v1` para `/v2`) introduzirá alterações de quebra na API.
+
+.Instância ou coleção de recursos
+Uma combinação de tipos de recursos e identificadores pode ser usada no caminho, com base no acesso a uma instância ou coleção de recursos.
+
+.Exemplo
+* Caminho do recurso
++
+Com base na estrutura apresentada acima, um caminho típico para um endpoint é: `/accounts/{account_id}/core/v1/users`.
+
+* URL completo
++
+O URL completo para o endpoint correspondente é: `\https://astra.netapp.io/accounts/{account_id}/core/v1/users`.
+
+

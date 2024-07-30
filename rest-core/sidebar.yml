@@ -1,0 +1,12 @@
+---
+section: rest-core
+title: Design central
+entries:
+- title: Serviços web REST
+  url: "/rest-core/rest_web_services.html"
+- title: Recursos e coleções
+  url: "/rest-core/resources_collections.html"
+- title: Detalhes HTTP
+  url: "/rest-core/http_details.html"
+- title: Formato de URL
+  url: "/rest-core/url_format.html"

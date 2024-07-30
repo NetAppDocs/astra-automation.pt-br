@@ -1,0 +1,97 @@
+---
+sidebar: sidebar 
+permalink: workflows/wf_list_snapshots.html 
+keywords:  
+summary: Você pode listar os snapshots que foram obtidos para um aplicativo específico. 
+---
+= Liste os instantâneos
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode listar os snapshots que foram obtidos para um aplicativo específico.
+
+
+
+== Antes de começar
+
+Você deve ter o ID do aplicativo para o qual deseja listar os snapshots. Se necessário, você pode usar o fluxo de trabalho link:wf_list_man_apps.html["Liste as aplicações"] para localizar o aplicativo.
+
+
+
+== Liste os instantâneos
+
+Execute a seguinte chamada de API REST para listar os snapshots.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="25,75"]
+|===
+| Método HTTP | Caminho 
+
+
+| OBTER | /Accounts/_id/k8s/v1/apps//app_id/appSnaps 
+|===
+.Parâmetros de entrada adicionais
+Além dos parâmetros comuns com todas as chamadas de API REST, os seguintes parâmetros também são usados nos exemplos curl para esta etapa.
+
+[cols="15,10,10,65"]
+|===
+| Parâmetro | Tipo | Obrigatório | Descrição 
+
+
+| id da aplicação | Caminho | Sim | Identifica o aplicativo que possui os snapshots listados. 
+
+
+| contar | Consulta | Não | Se `count=true` o número de instantâneos estiver incluído na seção metadados da resposta. 
+|===
+.Curl exemplo: Retornar todos os snapshots para o aplicativo
+[source, curl]
+----
+curl --request GET \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/k8s/v1/apps/$APP_ID/appSnaps" \
+--include \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN"
+----
+.Curl exemplo: Retorna todos os instantâneos para o aplicativo e a contagem
+[source, curl]
+----
+curl --request GET \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/k8s/v1/apps/$APP_ID/appSnaps?count=true" \
+--include \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN"
+----
+.Exemplo de saída JSON
+[listing]
+----
+{
+    "items": [
+        {
+            "type": "application/astra-appSnap",
+            "version": "1.1",
+            "id": "1ce34da4-bb0a-4926-b925-4a5d85dda8c2",
+            "hookState": "success",
+            "metadata": {
+                "createdBy": "a530e865-23e8-4e2e-8020-e92c419a3867",
+                "creationTimestamp": "2022-10-30T22:44:20Z",
+                "modificationTimestamp": "2022-10-30T22:44:20Z",
+                "labels": []
+            },
+            "snapshotAppAsset": "0ebfe3f8-40ed-4bdc-88c4-2144fbda85a0",
+            "snapshotCreationTimestamp": "2022-10-30T22:44:33Z",
+            "name": "snapshot-david-1",
+            "state": "completed",
+            "stateUnready": []
+        }
+    ],
+    "metadata": {}
+}
+----

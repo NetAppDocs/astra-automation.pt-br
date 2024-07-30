@@ -1,0 +1,27 @@
+---
+sidebar: sidebar 
+permalink: rn/earlier-versions.html 
+keywords: earlier versions, earlier releases 
+summary: Você pode acessar a documentação de automação de versões anteriores do Astra Control. 
+---
+= Versões anteriores da documentação do Astra Control Automation
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode acessar a documentação de automação de versões anteriores do Astra Control nos links abaixo.
+
+* https://docs.netapp.com/us-en/astra-automation-2310/["Documentação do Astra Control Automation 23,10"^]
+* https://docs.netapp.com/us-en/astra-automation-2307/["Documentação do Astra Control Automation 23,07"^]
+* https://docs.netapp.com/us-en/astra-automation-2304/["Documentação do Astra Control Automation 23,04"^]
+* https://docs.netapp.com/us-en/astra-automation-2211/["Documentação do Astra Control Automation 22,11"^]
+* https://docs.netapp.com/us-en/astra-automation-2208/["Documentação do Astra Control Automation 22,08"^]
+* https://docs.netapp.com/us-en/astra-automation-2204/["Documentação do Astra Control Automation 22,04"^]
+* https://docs.netapp.com/us-en/astra-automation-2112/["Documentação do Astra Control Automation 21,12"^]
+* https://docs.netapp.com/us-en/astra-automation-2108/["Documentação do Astra Control Automation 21,08"^]
+

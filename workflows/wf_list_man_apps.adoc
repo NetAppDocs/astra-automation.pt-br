@@ -1,0 +1,77 @@
+---
+sidebar: sidebar 
+permalink: workflows/wf_list_man_apps.html 
+keywords:  
+summary: Você pode listar as aplicações que atualmente são gerenciadas pelo Astra. Você pode fazer isso como parte de encontrar os snapshots ou backups de um aplicativo específico. 
+---
+= Liste as aplicações
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode listar as aplicações que atualmente são gerenciadas pelo Astra. Você pode fazer isso como parte de encontrar os snapshots ou backups de um aplicativo específico.
+
+Execute a seguinte chamada de API REST.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="25,75"]
+|===
+| Método HTTP | Caminho 
+
+
+| OBTER | /account//k8s/v2/apps 
+|===
+.Parâmetros de entrada adicionais
+Além dos parâmetros comuns com todas as chamadas de API REST, os seguintes parâmetros também são usados nos exemplos curl para esta etapa.
+
+[cols="25,10,10,55"]
+|===
+| Parâmetro | Tipo | Obrigatório | Descrição 
+
+
+| incluir | Consulta | Não | Opcionalmente, selecione os valores que você deseja retornar na resposta. 
+|===
+.Curl exemplo: Retorna todos os dados para todos os aplicativos
+[source, curl]
+----
+curl --request GET \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/k8s/v2/apps" \
+--include \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN"
+----
+.Curl exemplo: Retorna o nome, id e estado de todos os aplicativos
+[source, curl]
+----
+curl --request GET \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/k8s/v2/apps?include=name,id,state" \
+--include \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN"
+----
+.Exemplo de saída JSON
+[listing]
+----
+{
+    "items": [
+        [
+            "mysql",
+            "4ee2b8fa-3696-4f32-8879-399792f477c3",
+            "ready"
+        ],
+        [
+            "postgresql",
+            "3b984474-e5c9-4b64-97ee-cdeb9bcd212e",
+            "ready"
+        ],
+    ],
+    "metadata": {}
+}
+----

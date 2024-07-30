@@ -1,0 +1,48 @@
+---
+section: workflows_infra
+title: Workflows de infraestrutura
+entries:
+- title: Prepare-se para usar os workflows de infraestrutura
+  url: "/workflows_infra/workflows_infra_before.html"
+- title: Identidade e acesso
+  entries:
+  - title: Listar usuários
+    url: "/workflows_infra/wf_list_users.html"
+  - title: Crie um usuário
+    url: "/workflows_infra/wf_create_user.html"
+- title: Configuração LDAP
+  entries:
+  - title: Prepare-se para a configuração LDAP
+    url: "/workflows_infra/ldap_prepare.html"
+  - title: Configure o servidor LDAP
+    url: "/workflows_infra/wf_ldap_configure_server.html"
+  - title: Adicionar entradas LDAP ao Astra
+    url: "/workflows_infra/wf_ldap_add_entries.html"
+  - title: Desativar e repor LDAP
+    url: "/workflows_infra/wf_ldap_disable_reset.html"
+- title: Clusters
+  entries:
+  - title: Listar clusters
+    url: "/workflows_infra/wf_list_clusters.html"
+  - title: Adicione um cluster
+    url: "/workflows_infra/wf_add_cluster.html"
+  - title: Listar clusters gerenciados
+    url: "/workflows_infra/wf_list_man_clusters.html"
+  - title: Gerenciar um cluster
+    url: "/workflows_infra/wf_man_cluster.html"
+- title: Nuvens
+  entries:
+  - title: Listar nuvens
+    url: "/workflows_infra/wf_list_clouds.html"
+- title: Baldes
+  entries:
+  - title: Listar buckets
+    url: "/workflows_infra/wf_list_buckets.html"
+- title: Armazenamento
+  entries:
+  - title: Listar classes de armazenamento
+    url: "/workflows_infra/wf_list_storage_classes.html"
+  - title: Listar backends de armazenamento
+    url: "/workflows_infra/wf_list_storage_backends.html"
+  - title: Habilite pools de ANF dinâmicos
+    url: "/workflows_infra/wf_enable_anf_dyn_pools.html"

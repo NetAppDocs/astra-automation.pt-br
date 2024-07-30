@@ -1,0 +1,78 @@
+---
+sidebar: sidebar 
+permalink: workflows/wf_manage_app.html 
+keywords:  
+summary: Você pode criar uma aplicação gerenciada com base em uma aplicação já conhecida pelo Astra em um namespace específico. Quando uma aplicação é gerenciada ou definida no Astra, você pode protegê-la fazendo backups e snapshots. 
+---
+= Gerenciar um aplicativo
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Você pode criar uma aplicação gerenciada com base em uma aplicação já conhecida pelo Astra em um namespace específico. Quando uma aplicação é gerenciada ou definida no Astra, você pode protegê-la fazendo backups e snapshots.
+
+
+
+== Passo 1: Selecione o namespace
+
+Execute o fluxo de trabalho link:../workflows/wf_list_namespaces.html["Liste os namespaces"] e selecione o namespace.
+
+
+
+== Passo 2: Selecione o cluster
+
+Execute o fluxo de trabalho link:../workflows_infra/wf_list_clusters.html["Liste os clusters"] e selecione o cluster.
+
+
+
+== Passo 3: Gerencie o aplicativo
+
+Execute a seguinte chamada de API REST para gerenciar o aplicativo.
+
+.Método HTTP e endpoint
+Essa chamada de API REST usa o método e o endpoint a seguir.
+
+[cols="25,75"]
+|===
+| Método HTTP | Caminho 
+
+
+| POST | /accounts/_id/k8s/v2/apps 
+|===
+.Parâmetros de entrada adicionais
+Além dos parâmetros comuns com todas as chamadas de API REST, os seguintes parâmetros também são usados nos exemplos curl para esta etapa.
+
+[cols="25,10,10,55"]
+|===
+| Parâmetro | Tipo | Obrigatório | Descrição 
+
+
+| JSON | Corpo | Sim | Fornece os parâmetros necessários para identificar o aplicativo a ser gerenciado. Veja o exemplo abaixo. 
+|===
+.Curl exemplo: Gerencie um aplicativo
+[source, curl]
+----
+curl --request POST \
+--location "https://astra.netapp.io/accounts/$ACCOUNT_ID/k8s/v2/apps" \
+--include \
+--header "Content-Type: application/astra-app+json" \
+--header "Accept: */*" \
+--header "Authorization: Bearer $API_TOKEN" \
+--data @JSONinput
+----
+.Exemplo de entrada JSON
+[source, json]
+----
+{
+  "clusterID": "7ce83fba-6aa1-4e0c-a194-26e714f5eb46",
+  "name": "subtext",
+  "namespaceScopedResources": [{"namespace": "kube-matrix"}],
+  "type": "application/astra-app",
+  "version": "2.0"
+}
+----
